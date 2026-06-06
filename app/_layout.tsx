@@ -10,17 +10,19 @@ import { WatchlistProvider } from "./context/WatchlistContext";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     ...Ionicons.font,
   });
 
   useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
+    if (fontsLoaded || fontError) {
+      // Once fonts are ready (or if an error occurs), hide the splash screen
+      SplashScreen.hideAsync().catch(() => {/* ignore errors */});
     }
-  }, [loaded, error]);
+  }, [fontsLoaded, fontError]);
 
-  if (!loaded && !error) {
+  // Prevent the app from rendering while fonts are loading to avoid layout shifts or missing icons
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 

@@ -1,32 +1,28 @@
-import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
-import { StyleProp, ViewStyle } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { ComponentProps } from 'react';
+import { StyleProp, TextStyle } from 'react-native';
+
+type IoniconsName = ComponentProps<typeof Ionicons>['name'];
+
+const MAPPING: Record<string, IoniconsName> = {
+  'house.fill': 'home',
+  'paperplane.fill': 'paper-plane',
+  'chevron.left.forwardslash.chevron.right': 'code',
+  'chevron.right': 'chevron-forward',
+};
+
+type IconSymbolName = keyof typeof MAPPING;
 
 export function IconSymbol({
   name,
   size = 24,
   color,
   style,
-  weight = 'regular',
 }: {
-  name: SymbolViewProps['name'];
+  name: IconSymbolName;
   size?: number;
   color: string;
-  style?: StyleProp<ViewStyle>;
-  weight?: SymbolWeight;
+  style?: StyleProp<TextStyle>;
 }) {
-  return (
-    <SymbolView
-      weight={weight}
-      tintColor={color}
-      resizeMode="scaleAspectFit"
-      name={name}
-      style={[
-        {
-          width: size,
-          height: size,
-        },
-        style,
-      ]}
-    />
-  );
+  return <Ionicons color={color} size={size} name={MAPPING[name]} style={style} />;
 }

@@ -1,9 +1,7 @@
 import React from "react";
-import { View, ActivityIndicator } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
-import { useFonts } from "expo-font";
 
 import { useTheme } from "../app/context/ThemeContext";
 
@@ -87,20 +85,6 @@ function TabNavigator() {
 }
 
 export default function AppNavigator() {
-  const { theme } = useTheme();
-  const [fontsLoaded] = useFonts({
-    ...Ionicons.font,
-  });
-
-  // Prevent the app from rendering without icons to avoid layout jumps or missing UI
-  if (!fontsLoaded) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: theme.background }}>
-        <ActivityIndicator size="large" color={theme.accent} />
-      </View>
-    );
-  }
-
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Tabs" component={TabNavigator} />
